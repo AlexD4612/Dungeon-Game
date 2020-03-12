@@ -32,6 +32,8 @@ public abstract class Hero extends DungeonCharacter implements Attack
 {
 	private double chanceToBlock;
 	private int numTurns;
+	private int healthPotions;
+	private int visionPotions;
 
 //-----------------------------------------------------------------
 //calls base constructor and gets name of hero from user
@@ -40,6 +42,14 @@ public abstract class Hero extends DungeonCharacter implements Attack
 	this.chanceToBlock = chanceToBlock;
 	readName();
   }
+
+public int getVisionPotions() {
+	return visionPotions;
+}
+
+public void setVisionPotions(int visionPotions) {
+	this.visionPotions = visionPotions;
+}
 
 /*-------------------------------------------------------
 readName obtains a name for the hero from the user
@@ -202,4 +212,143 @@ public final void battleChoices(DungeonCharacter opponent)
 		} while(getNumTurns() > 0 && getHitPoints() > 0 && opponent.getHitPoints() > 0);
 	
 	}
+
+public void play(Room[][] dung,Hero theHero) {
+	Scanner kb = new Scanner(System.in);
+	int i = 0;
+	int j = 0;
+	Room room = dung[i][j];
+	System.out.println("you awaken in the dungeon");
+	do{
+		System.out.print(room+"\n");
+		checkKey(room,theHero);
+		System.out.println("1. Use potion\n2. Move");
+		int choice =kb.nextInt();
+		if(choice ==1) Potions(theHero);
+		else { 
+			System.out.println("Choose a direction using W-A-S-D keys");
+			String move = kb.next();
+		if(move.equals("d")) {
+			if(j!=4) {
+			j++;
+			room = dung[i][j];
+			}
+			else {
+				System.out.print("Can't go further right\n");
+			}
+		}
+		else if(move.equals("a")) {
+			if(j!=0) {
+				j--;
+				room = dung[i][j];
+			}
+			else {
+				System.out.print("Can't go further left\n");
+			}
+		}
+		else if(move.equals("w")) {
+			if(i!=0) {
+				i--;
+				room = dung[i][j];
+			}
+			else {
+				System.out.print("Can't go further up\n");
+			}
+		}
+			else if(move.equals("s")) {
+				if(i!=4) {
+					i++;
+					room = dung[i][j];
+				}
+				else {
+					System.out.print("Can't go further down\n");
+				}
+		}
+		}
+			
+	}	while(theHero.isAlive());
+	
+	System.out.println("Game over");
+	
+}
+
+
+public static void checkKey(Room room, Hero theHero) {
+	int random = (int)(Math.random() * 3) + 1;
+	Monster theMonster =  new MonsterFactory().createMonster(random);
+	if(room.getKey().equals("I")) {
+		System.out.println("You are at the entrance of the dungeon");
+	}
+	else if(room.getKey().equals("X")) {
+		System.out.println("You encountered a monster!");
+		Dungeon.battle(theHero,theMonster);
+		room.setKey("E");
+	}
+	else if(room.getKey().equals("P")) {
+		System.out.println("You fell in a pit!");
+		pit(theHero);
+	}
+	
+	else if (room.getKey().equals("H")) {
+		System.out.println("You found a healing potion");
+		room.setHealthPotions(room.getHealthPotions() - 1);
+		theHero.setHealthPotions(theHero.getHealthPotions() + 1);
+		room.setKey("E");
+		
+	}
+	else if (room.getKey().equals("V")) {
+		System.out.println("You found a Vision potion");
+		room.setVisionPotions(room.getVisionPotions() - 1);
+		theHero.visionPotions++;
+		room.setKey("E");
+	}
+}
+
+public static void pit(Hero theHero) {
+	int random = (int)(Math.random()*15)+1;
+	theHero.subtractHitPoints(2);
+}
+
+public static void useHealPotion(Hero Hero) {
+	if(Hero.getHealthPotions()>0) {
+	
+	
+	double randomDouble = Math.random();
+	randomDouble = randomDouble * 15 + 1;
+	int randomInt = (int) randomDouble;
+	Hero.addHitPoints(randomInt);
+	System.out.println(Hero.getName() +" healed "+randomInt+" hitpoints");
+	Hero.setHealthPotions(Hero.getHealthPotions()-1);
+	}
+	else {
+		System.out.println("You have no health potions left!");
+	}
+}
+public void Potions(Hero Hero) {
+	Scanner kb = new Scanner(System.in);
+	System.out.println("Health Potions: "+Hero.healthPotions+
+					  "\nVision Potions: "+Hero.visionPotions);
+	System.out.println("Which potion would you like to use?\n 1. Health\n 2.Vision ");
+	int choice = kb.nextInt();
+	if (choice == 1) {
+	  useHealPotion(Hero);
+	}
+	else{
+		useVisionPotion(Hero);
+	}
+}
+
+public void useVisionPotion(Hero hero) {
+	System.out.println("vision");
+	
+}
+
+public int getHealthPotions() {
+	return healthPotions;
+}
+
+public void setHealthPotions(int healthPotions) {
+	this.healthPotions = healthPotions;
+}
+
 }
