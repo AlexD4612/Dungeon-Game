@@ -13,7 +13,8 @@ public class HeroFactory {
 				return new Thief();
 		}
 		else {
-				return new Warrior();
+			System.out.println("Invalid choice, Warrior chosen\n\n");
+			return new Warrior();
 		}
 	}
 }
