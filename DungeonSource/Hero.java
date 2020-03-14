@@ -28,19 +28,21 @@ import java.util.Scanner;
  */
 
 
-public abstract class Hero extends DungeonCharacter implements Attack
+public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
 	private int numTurns;
 	private int healthPotions;
 	private int visionPotions;
-
+	protected AttackFlyweightFactory wFactory;
+	
 //-----------------------------------------------------------------
 //calls base constructor and gets name of hero from user
   public Hero(String name, int hitPoints, int attackSpeed, double chanceToHit, int damageMin, int damageMax, double chanceToBlock) {
 	super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
 	this.chanceToBlock = chanceToBlock;
 	readName();
+	wFactory = new AttackFlyweightFactory();
   }
 
 public int getVisionPotions() {
@@ -173,7 +175,9 @@ subclasses what the special attack is and how it
 should be performed.
 ---------------------------------------------------------*/
 
-protected abstract String getSpecialAttack();
+protected abstract String getSpecialAttackName();
+protected abstract Attack getSpecialAttack();
+protected abstract void handleSpecial(DungeonCharacter opponent);
 
 public final void battleChoices(DungeonCharacter opponent)
 	{
@@ -190,7 +194,7 @@ public final void battleChoices(DungeonCharacter opponent)
 		do
 		{
 		    System.out.println("1. Attack Opponent");
-		    System.out.println("2. " + getSpecialAttack());
+		    System.out.println("2. " + getSpecialAttackName());
 		    System.out.print("Choose an option: ");
 		    choice = kb.nextInt();
 		    
@@ -199,7 +203,8 @@ public final void battleChoices(DungeonCharacter opponent)
 	
 		    }
 		    else if (choice == 2 ) {
-		    	specialAttack(opponent);
+		    	getSpecialAttack().specialAttack();
+		    	handleSpecial(opponent);
 		    }
 		    else {
 		    	System.out.println("invalid choice!");
@@ -328,7 +333,7 @@ public void Potions(Hero Hero) {
 	Scanner kb = new Scanner(System.in);
 	System.out.println("Health Potions: "+Hero.healthPotions+
 					  "\nVision Potions: "+Hero.visionPotions);
-	System.out.println("Which potion would you like to use?\n 1. Health\n 2.Vision ");
+	System.out.println("Which potion would you like to use?\n 1. Health\n 2. Vision ");
 	int choice = kb.nextInt();
 	if (choice == 1) {
 	  useHealPotion(Hero);
@@ -351,4 +356,3 @@ public void setHealthPotions(int healthPotions) {
 	this.healthPotions = healthPotions;
 }
 
-}

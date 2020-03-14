@@ -13,14 +13,12 @@ import java.util.Scanner;
 
 public class Sorceress extends Hero 
 {
-	private final int MIN_ADD = 25;
-	private final int MAX_ADD = 50;
-
+	private Attack specialAttack;
 
     public Sorceress()
 	{
 		super("Sorceress", 75, 5, .7, 25, 50, .3);
-
+		this.specialAttack = wFactory.getAttack("Sorceress");
 
     }
 
@@ -30,24 +28,25 @@ public class Sorceress extends Hero
 							opponent.getName() + ":");
 		super.attack(opponent);
 	}
-
+	
 	@Override
-	public void specialAttack(DungeonCharacter opponent)
-	{
-		int hPoints;
-
-		hPoints = (int)(Math.random() * (MAX_ADD - MIN_ADD + 1)) + MIN_ADD;
+	protected void handleSpecial(DungeonCharacter opponent) {
+		int hPoints = specialAttack.specialAttack();
 		addHitPoints(hPoints);
 		System.out.println(getName() + " added [" + hPoints + "] points.\n"
-							+ "Total hit points remaining are: "
-							+ getHitPoints());
-		 System.out.println();
-		
+				+ "Total hit points remaining are: "
+				+ getHitPoints());
+		System.out.println();
 	}
-
-
+	
 	@Override
-	protected String getSpecialAttack() {
+	protected String getSpecialAttackName() {
 		return "Increase Hitpoints";
 	}
+
+	@Override
+	protected Attack getSpecialAttack() {
+		return specialAttack;
+	}
+	
 }
