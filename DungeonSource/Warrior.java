@@ -15,11 +15,14 @@ import java.util.Scanner;
 public class Warrior extends Hero
 {
 
+	private Attack specialAttack;
+	
     public Warrior()
 	{
 
 		super("Warrior", 125, 4, .8, 35, 60, .2);
-
+		this.specialAttack = wFactory.getAttack("Warrior");
+		
     }
 
 
@@ -29,16 +32,25 @@ public class Warrior extends Hero
 							opponent.getName() + ":");
 		super.attack(opponent);
 	}
+	
+	@Override
+	protected Attack getSpecialAttack() {
+		return this.specialAttack;
+	}
 
 
 	@Override
-	public void specialAttack(DungeonCharacter opponent) 
-	{
-		if (Math.random() <= .4)
-		{
-			int blowPoints = (int)(Math.random() * 76) + 100;
+	protected String getSpecialAttackName() {
+		return "Crushing Blow";
+	}
+
+
+	@Override
+	protected void handleSpecial(DungeonCharacter opponent) {
+		int blowPoints = this.specialAttack.specialAttack();
+		if (blowPoints != 0) {
 			System.out.println(getName() + " lands a CRUSHING BLOW for " + blowPoints
-								+ " damage!");
+					+ " damage!");
 			opponent.subtractHitPoints(blowPoints);
 		}
 		else
@@ -47,12 +59,6 @@ public class Warrior extends Hero
 			System.out.println();
 		}
 		
-	}
-
-
-	@Override
-	protected String getSpecialAttack() {
-		return "Crushing Blow";
 	}
 
 }

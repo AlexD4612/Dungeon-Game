@@ -12,9 +12,12 @@ import java.util.Scanner;
 public class Thief extends Hero
 {
 
+	private Attack specialAttack;
+	
     public Thief()
 	{
 		super("Thief", 75, 6, .8, 20, 40, .5);
+		this.specialAttack = wFactory.getAttack("Thief");
     }
     
     public void attack(DungeonCharacter opponent)
@@ -23,29 +26,34 @@ public class Thief extends Hero
 							opponent.getName() + ":");
 		super.attack(opponent);
 	}
-    
+
 	@Override
-	public void specialAttack(DungeonCharacter opponent)
-	{	
-		double surprise = Math.random();
-		if (surprise <= .4)
+	protected Attack getSpecialAttack() {
+		return this.specialAttack;
+	}
+
+	@Override
+	protected String getSpecialAttackName() {
+		return "Suprise Attack";
+	}
+
+	@Override
+	protected void handleSpecial(DungeonCharacter opponent) {
+		int surprise = this.specialAttack.specialAttack();
+		if (surprise == 1)
 		{
 			System.out.println("Surprise attack was successful!\n" +
 								getName() + " gets an additional turn.");
 			setNumTurns(getNumTurns()+1);
 			attack(opponent);
 		}
-		else if (surprise >= .9)
+		else if (surprise == -1)
 		{
 			System.out.println("Uh oh! " + opponent.getName() + " saw you and" +
 								" blocked your attack!");
 		}
-		else
+		else {
 		    attack(opponent);
-	}
-
-	@Override
-	protected String getSpecialAttack() {
-		return "Suprise Attack";
+		}
 	}
 }

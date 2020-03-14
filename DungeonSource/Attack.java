@@ -1,6 +1,7 @@
 
 public interface Attack {
 
-	public void specialAttack(DungeonCharacter opponent);
+	public int specialAttack();
+	public String getKey();
 	
 }
