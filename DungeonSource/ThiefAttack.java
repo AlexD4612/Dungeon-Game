@@ -1,17 +1,13 @@
 
 public class ThiefAttack implements Attack {
 	
-	private final String KEY;
+
+public class ThiefAttack extends Attack {
 	
 	public ThiefAttack(String key) {
-		this.KEY = key;
+		super(key);
 	}
 	
-	public String getKey() {
-		return this.KEY;
-	}
-	
-	@Override
 	public int specialAttack() {
 		double surprise = Math.random();
 		if (surprise <= .4) {
@@ -24,6 +20,7 @@ public class ThiefAttack implements Attack {
 			return 0;
 		}
 	}
+}
 
 }
 

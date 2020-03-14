@@ -1,14 +1,8 @@
 
-public class WarriorAttack implements Attack {
-	
-	private final String KEY;
+public class WarriorAttack extends Attack {
 	
 	public WarriorAttack(String key) {
-		this.KEY = key;
-	}
-	
-	public String getKey() {
-		return this.KEY;
+		super(key);
 	}
 
 	@Override
@@ -23,4 +17,5 @@ public class WarriorAttack implements Attack {
 	}
 
 }
+
 
