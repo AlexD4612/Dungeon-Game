@@ -14,7 +14,7 @@ public class DungeonAdventure {
 			    Hero theHero = new HeroFactory().createHero(kb.nextInt());
 			    Dungeon dungeon = new Dungeon();
 				Room[][] dung = dungeon.createDungeon();
-				theHero.play(dung,theHero);
+				theHero.play(dung,theHero,dungeon);
 			} while (playAgain());
 			kb.close();
 		}

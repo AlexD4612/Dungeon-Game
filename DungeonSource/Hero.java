@@ -34,6 +34,7 @@ public abstract class Hero extends DungeonCharacter
 	private int numTurns;
 	private int healthPotions;
 	private int visionPotions;
+	private int pillars;
 	protected AttackFlyweightFactory wFactory;
 	
 //-----------------------------------------------------------------
@@ -218,25 +219,34 @@ public final void battleChoices(DungeonCharacter opponent)
 	
 	}
 
-public void play(Room[][] dung,Hero theHero) {
+public void play(Room[][] dung,Hero theHero,Dungeon dungeon) {
 	Scanner kb = new Scanner(System.in);
 	int i = 0;
 	int j = 0;
 	Room room = dung[i][j];
 	System.out.println("you awaken in the dungeon");
-	do{
+	if(theHero.pillars!=4) {
+		while(theHero.isAlive()){
+		room = dung[i][j];
+		checkKey(room,theHero,dung);
 		System.out.print(room+"\n");
-		checkKey(room,theHero);
+		
+		if(!theHero.isAlive()||(room==dung[4][4]&&theHero.pillars==4)) {
+			break;
+		}
+		
 		System.out.println("1. Use potion\n2. Move");
+		
 		int choice =kb.nextInt();
-		if(choice ==1) Potions(theHero);
+		if(choice ==1) Potions(theHero,dung,i,j);
+		else if (choice ==3) System.out.print(dungeon.toString(dung)+"\n");
 		else { 
 			System.out.println("Choose a direction using W-A-S-D keys");
 			String move = kb.next();
-		if(move.equals("d")) {
-			if(j!=4) {
-			j++;
-			room = dung[i][j];
+		
+			if(move.equals("d")) {
+				if(j!=4) {
+					j++;
 			}
 			else {
 				System.out.print("Can't go further right\n");
@@ -245,7 +255,6 @@ public void play(Room[][] dung,Hero theHero) {
 		else if(move.equals("a")) {
 			if(j!=0) {
 				j--;
-				room = dung[i][j];
 			}
 			else {
 				System.out.print("Can't go further left\n");
@@ -254,7 +263,6 @@ public void play(Room[][] dung,Hero theHero) {
 		else if(move.equals("w")) {
 			if(i!=0) {
 				i--;
-				room = dung[i][j];
 			}
 			else {
 				System.out.print("Can't go further up\n");
@@ -263,24 +271,27 @@ public void play(Room[][] dung,Hero theHero) {
 			else if(move.equals("s")) {
 				if(i!=4) {
 					i++;
-					room = dung[i][j];
 				}
 				else {
 					System.out.print("Can't go further down\n");
 				}
 		}
-		}
-			
-	}	while(theHero.isAlive());
+		}	
+	}	
+	}
+	else {
+		checkKey(room,theHero,dung);
+	}
 	
-	System.out.println("Game over");
+	System.out.println("Game over!");
 	
 }
 
 
-public static void checkKey(Room room, Hero theHero) {
+public static void checkKey(Room room, Hero theHero,Room[][] dung) {
 	int random = (int)(Math.random() * 3) + 1;
 	Monster theMonster =  new MonsterFactory().createMonster(random);
+	if(room!=dung[4][4]) {
 	if(room.getKey().equals("I")) {
 		System.out.println("You are at the entrance of the dungeon");
 	}
@@ -290,8 +301,13 @@ public static void checkKey(Room room, Hero theHero) {
 		room.setKey("E");
 	}
 	else if(room.getKey().equals("P")) {
-		System.out.println("You fell in a pit!");
 		pit(theHero);
+	}
+	else if(room.getKey().equals("p")) {
+		theHero.setPillars(theHero.getPillars()+1);
+		System.out.println("You found pillar "+theHero.getPillars()+"/4");
+		room.setPillars(room.getPillars() - 1);
+		room.setKey("E");
 	}
 	
 	else if (room.getKey().equals("H")) {
@@ -307,12 +323,37 @@ public static void checkKey(Room room, Hero theHero) {
 		theHero.visionPotions++;
 		room.setKey("E");
 	}
+	else if (room.getKey().equals("E")){
+		System.out.println("this room is empty");
+	}
+	}
+	else if (room.getKey().equals("O")) {
+		if(theHero.getPillars()<4) {
+			System.out.println("You found the exit, but you don't have enough pillars of OO!");
+		}
+		else {
+			System.out.println("You escaped the dungeon with all 4 pillars of OO!");
+		}
+	}
+}
+
+
+
+public int getPillars() {
+	return pillars;
+}
+
+public void setPillars(int pillars) {
+	this.pillars = pillars;
 }
 
 public static void pit(Hero theHero) {
 	int random = (int)(Math.random()*15)+1;
-	theHero.subtractHitPoints(2);
+	theHero.setHitPoints(theHero.getHitPoints()-random);
+	System.out.println(theHero.getName()+" fell in a pit and lost "+random+" hitpoints");
 }
+
+
 
 public static void useHealPotion(Hero Hero) {
 	if(Hero.getHealthPotions()>0) {
@@ -329,7 +370,9 @@ public static void useHealPotion(Hero Hero) {
 		System.out.println("You have no health potions left!");
 	}
 }
-public void Potions(Hero Hero) {
+
+
+public void Potions(Hero Hero,Room[][] dung,int i,int j) {
 	Scanner kb = new Scanner(System.in);
 	System.out.println("Health Potions: "+Hero.healthPotions+
 					  "\nVision Potions: "+Hero.visionPotions);
@@ -339,13 +382,24 @@ public void Potions(Hero Hero) {
 	  useHealPotion(Hero);
 	}
 	else{
-		useVisionPotion(Hero);
+		useVisionPotion(Hero,dung,i,j);
 	}
 }
 
-public void useVisionPotion(Hero hero) {
-	System.out.println("vision");
-	
+public void useVisionPotion(Hero hero,Room[][]dung,int i,int j) {
+	if(i!=4) {
+	System.out.print(dung[i][j+1].toString()+"\n");
+	}
+	if(i!=0) {
+	System.out.print(dung[i-1][j].toString());
+	}
+	System.out.print(dung[i][j].toString());
+	if(i!=4) {
+	System.out.print(dung[i+1][j].toString()+"\n");
+	}
+	if(i!=0) {
+	System.out.print(dung[i][j-1].toString());
+	}
 }
 
 public int getHealthPotions() {
@@ -355,4 +409,4 @@ public int getHealthPotions() {
 public void setHealthPotions(int healthPotions) {
 	this.healthPotions = healthPotions;
 }
-
+}
