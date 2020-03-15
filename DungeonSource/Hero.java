@@ -410,4 +410,4 @@ public void setHealthPotions(int healthPotions) {
 	this.healthPotions = healthPotions;
 	}
 }
-}
+
