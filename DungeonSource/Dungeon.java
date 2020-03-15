@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Dungeon
 {
+	private Room[][] rooms;
 	private static Scanner kb = new Scanner(System.in);
 
 /*-------------------------------------------------------------------
@@ -55,7 +56,11 @@ user has the option of quitting.
 			Room[][] dung = new Room[5][5];		
 			dung[0][0]=new Room("I");
 			dung[4][4] = new Room("O");
-		        ArrayList<Integer> list = new ArrayList<Integer>();
+			dung[1][3] = new Room("p");
+			dung[2][4] = new Room ("p");
+			dung[4][2] = new Room ("p");
+			dung[3][1] = new Room ("p");
+					ArrayList<Integer> list = new ArrayList<Integer>();
 		        for (int x = 1; x <= 5; x++) {
 		            list.add(new Integer(x));
 		        }
@@ -103,7 +108,21 @@ user has the option of quitting.
 		        	}
 			}
 		  }
+		    this.rooms= dung;
 		    return dung;    
+		}
+		
+		
+		public String toString(Room[][] rooms){
+			String list="";
+			int j= 0;
+			while(j<5) {
+			for(int i = 0;i<=4;i++) {
+				list+=rooms[i][j].toString();
+			}
+			j++;
+			}
+			return list;
 		}
 
 }
