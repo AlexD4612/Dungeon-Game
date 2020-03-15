@@ -52,9 +52,9 @@ public class Room {
 	}
 	public String toString() {
 		String room ="***--***\n"
-				   + "*  "+key+"   *\n"
+				   + "|  "+key+"   |\n"
 				   + "*      *\n"
-				   + "********";
+				   + "***--***\n";
 		return room;
 		}
 
