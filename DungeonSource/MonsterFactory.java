@@ -12,6 +12,9 @@ public class MonsterFactory {
 		else if (monsterNum == 3) {
 			return new Skeleton();
 		}
+		else if (monsterNum == 4) {
+			return new Gargoyle();
+		}
 		else {
 			return new Skeleton();
 		}

@@ -408,5 +408,6 @@ public int getHealthPotions() {
 
 public void setHealthPotions(int healthPotions) {
 	this.healthPotions = healthPotions;
+	}
 }
-}
+
