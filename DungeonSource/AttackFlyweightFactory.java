@@ -13,6 +13,7 @@ public class AttackFlyweightFactory{
 		pool.add(new SorceressAttack("Sorceress"));
 		pool.add(new ThiefAttack("Thief"));
 		pool.add(new WarriorAttack("Warrior"));
+		pool.add(new BloodMageAttack("BloodMage"));
 	}
 	
 	public Attack getAttack(String key) {

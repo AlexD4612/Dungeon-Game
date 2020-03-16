@@ -12,6 +12,9 @@ public class HeroFactory {
 		else if (heroNum == 3) {
 				return new Thief();
 		}
+		else if (heroNum == 4) {
+				return new BloodMage();
+		}
 		else {
 			System.out.println("Invalid choice, Warrior chosen\n\n");
 			return new Warrior();

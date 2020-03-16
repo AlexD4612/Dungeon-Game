@@ -9,12 +9,13 @@ public class DungeonAdventure {
 				System.out.println("Choose a hero:\n" +
 					       "1. Warrior\n" +
 						   "2. Sorceress\n" +
-						   "3. Thief");
+						   "3. Thief\n" +
+						   "4. Blood Mage");
 				int random = (int)(Math.random() * 3) + 1;
 			    Hero theHero = new HeroFactory().createHero(kb.nextInt());
 			    Dungeon dungeon = new Dungeon();
 				Room[][] dung = dungeon.createDungeon();
-				theHero.play(dung,theHero);
+				theHero.play(dung,theHero,dungeon);
 			} while (playAgain());
 			kb.close();
 		}
