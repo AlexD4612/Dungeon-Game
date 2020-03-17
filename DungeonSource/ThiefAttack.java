@@ -1,4 +1,4 @@
-	
+
 public class ThiefAttack extends Attack {
 	
 	public ThiefAttack(String key) {
@@ -18,4 +18,3 @@ public class ThiefAttack extends Attack {
 		}
 	}
 }
-
