@@ -171,9 +171,14 @@ battleChoices is a Template method that delegates to
 subclasses about what attacks they should do. getSpecialAttack()
 returns the name of the special attack. attack(opponent) 
 prints out the attack then asks the super class for
-calculations. specialAttack(opponent) delegates to 
-subclasses what the special attack is and how it
-should be performed.
+calculations. getSpecialAttack.specialAttack() delegates to 
+subclasses what the special attack calculation is and handleSpecial(opponent)
+handles the integer that is returned from getSpecialAttack.specialAttack().
+
+Step delegated to subclasses:
+getSpecialAttackName()
+getSpecialAttack()
+handleSpecial(DungeonCharacter opponent)
 ---------------------------------------------------------*/
 
 protected abstract String getSpecialAttackName();
@@ -427,5 +432,6 @@ public int getHealthPotions() {
 
 public void setHealthPotions(int healthPotions) {
 	this.healthPotions = healthPotions;
+	}
 }
-}
+
