@@ -189,7 +189,7 @@ public final void battleChoices(DungeonCharacter opponent)
 	
 			System.out.println("Number of turns this round is: " + numTurns);
 		
-		int choice;
+		String choice;
 		Scanner kb = new Scanner(System.in);
 	
 		do
@@ -197,13 +197,13 @@ public final void battleChoices(DungeonCharacter opponent)
 		    System.out.println("1. Attack Opponent");
 		    System.out.println("2. " + getSpecialAttackName());
 		    System.out.print("Choose an option: ");
-		    choice = kb.nextInt();
+		    choice = kb.next();
 		    
-		    if(choice == 1) {
+		    if(choice.equals("1")) {
 		    	attack(opponent);
 	
 		    }
-		    else if (choice == 2 ) {
+		    else if (choice.equals("2") ) {
 		    	getSpecialAttack().specialAttack();
 		    	handleSpecial(opponent);
 		    }
@@ -228,8 +228,9 @@ public void play(Room[][] dung,Hero theHero,Dungeon dungeon) {
 	if(theHero.pillars!=4) {
 		while(theHero.isAlive()){
 		room = dung[i][j];
-		checkKey(room,theHero,dung);
 		System.out.print(room+"\n");
+		checkKey(room,theHero,dung);
+		
 		
 		if(!theHero.isAlive()||(room==dung[4][4]&&theHero.pillars==4)) {
 			break;
@@ -237,10 +238,10 @@ public void play(Room[][] dung,Hero theHero,Dungeon dungeon) {
 		
 		System.out.println("1. Use potion\n2. Move");
 		
-		int choice =kb.nextInt();
-		if(choice ==1) Potions(theHero,dung,i,j);
-		else if (choice ==3) System.out.print(dungeon.toString(dung)+"\n");
-		else { 
+		String choice =kb.next();
+		if(choice.equals("1")) Potions(theHero,dung,i,j);
+		else if (choice.equals("3")) System.out.print(dungeon.toString(dung)+"\n");
+		else if(choice.equals("2")) { 
 			System.out.println("Choose a direction using W-A-S-D keys");
 			String move = kb.next();
 		
@@ -277,6 +278,9 @@ public void play(Room[][] dung,Hero theHero,Dungeon dungeon) {
 				}
 		}
 		}	
+		else {
+			System.out.println("Invalid choice!");
+		}
 	}	
 	}
 	else {
@@ -299,15 +303,18 @@ public static void checkKey(Room room, Hero theHero,Room[][] dung) {
 		System.out.println("You encountered a monster!");
 		Dungeon.battle(theHero,theMonster);
 		room.setKey("E");
+		
 	}
 	else if(room.getKey().equals("P")) {
 		pit(theHero);
+		
 	}
 	else if(room.getKey().equals("p")) {
 		theHero.setPillars(theHero.getPillars()+1);
 		System.out.println("You found pillar "+theHero.getPillars()+"/4");
 		room.setPillars(room.getPillars() - 1);
 		room.setKey("E");
+		
 	}
 	
 	else if (room.getKey().equals("H")) {
@@ -315,6 +322,7 @@ public static void checkKey(Room room, Hero theHero,Room[][] dung) {
 		room.setHealthPotions(room.getHealthPotions() - 1);
 		theHero.setHealthPotions(theHero.getHealthPotions() + 1);
 		room.setKey("E");
+		
 		
 	}
 	else if (room.getKey().equals("V")) {
@@ -325,6 +333,12 @@ public static void checkKey(Room room, Hero theHero,Room[][] dung) {
 	}
 	else if (room.getKey().equals("E")){
 		System.out.println("this room is empty");
+	}
+	else if (room.getKey().equals("M")) {
+		theHero.visionPotions++;
+		theHero.healthPotions++;
+		room.setKey("E");
+		
 	}
 	}
 	else if (room.getKey().equals("O")) {
@@ -376,14 +390,18 @@ public void Potions(Hero Hero,Room[][] dung,int i,int j) {
 	Scanner kb = new Scanner(System.in);
 	System.out.println("Health Potions: "+Hero.healthPotions+
 					  "\nVision Potions: "+Hero.visionPotions);
-	System.out.println("Which potion would you like to use?\n 1. Health\n 2. Vision ");
-	int choice = kb.nextInt();
-	if (choice == 1) {
+	System.out.println("Which potion would you like to use?\n1. Health\n2. Vision \n3. Back");
+	String choice = kb.next();
+	if (choice.equals("1")) {
 	  useHealPotion(Hero);
 	}
-	else{
+	else if (choice.equals("2")){
 		useVisionPotion(Hero,dung,i,j);
 	}
+	else if (choice.equals("3")) {
+		return;
+	}
+	
 }
 
 public void useVisionPotion(Hero hero,Room[][]dung,int i,int j) {
@@ -400,6 +418,7 @@ public void useVisionPotion(Hero hero,Room[][]dung,int i,int j) {
 	if(i!=0) {
 	System.out.print(dung[i][j-1].toString());
 	}
+	hero.visionPotions--;
 }
 
 public int getHealthPotions() {

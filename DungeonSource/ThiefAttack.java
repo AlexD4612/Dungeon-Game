@@ -1,6 +1,5 @@
 
-public class ThiefAttack implements Attack {
-	
+
 
 public class ThiefAttack extends Attack {
 	
@@ -22,5 +21,4 @@ public class ThiefAttack extends Attack {
 	}
 }
 
-}
 
