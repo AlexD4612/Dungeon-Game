@@ -55,6 +55,7 @@ public class Room {
 				   + "|  "+key+"   |\n"
 				   + "*      *\n"
 				   + "***--***\n";
+				  
 		return room;
 		}
 
