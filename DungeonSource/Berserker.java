@@ -1,3 +1,3 @@
-public class Berserker extends Hero implements Attack {
+public class Berserker extends Hero {
 
 }
