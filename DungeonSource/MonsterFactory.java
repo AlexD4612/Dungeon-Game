@@ -15,6 +15,9 @@ public class MonsterFactory {
 		else if (monsterNum == 4) {
 			return new Gargoyle();
 		}
+		else if (monsterNum == 5) {
+			return new Ooze();
+		}
 		else {
 			return new Skeleton();
 		}
