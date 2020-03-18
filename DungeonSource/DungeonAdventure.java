@@ -11,7 +11,8 @@ public class DungeonAdventure {
 					       "1. Warrior\n" +
 						   "2. Sorceress\n" +
 						   "3. Thief\n" +
-						   "4. Blood Mage");
+						   "4. Blood Mage"+
+						   "5. Berserker");
 				int random = (int)(Math.random() * 3) + 1;
 			    Hero theHero = new HeroFactory().createHero(kb.nextInt());
 			    Dungeon dungeon = new Dungeon();
