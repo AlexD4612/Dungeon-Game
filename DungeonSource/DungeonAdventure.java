@@ -6,6 +6,7 @@ public class DungeonAdventure {
 			Scanner kb = new Scanner(System.in);
 			do
 			{
+				System.out.println("Welcome to Dungeon Adventure! You mysteriously arrived at\na dungeon and have to collect all four pillars of OO!\nWatch out for Monsters and Pits, and keep an eye open for potions!");
 				System.out.println("Choose a hero:\n" +
 					       "1. Warrior\n" +
 						   "2. Sorceress\n" +
