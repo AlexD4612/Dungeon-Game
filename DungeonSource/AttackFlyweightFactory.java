@@ -11,7 +11,7 @@ public class AttackFlyweightFactory{
 	
 	private void initialize() {
 		pool.add(new SorceressAttack("Sorceress"));
-		pool.add(new ThiefAttack("Thief"));
+		pool.add(new ThiefAttack("Theif"));
 		pool.add(new WarriorAttack("Warrior"));
 		pool.add(new BloodMageAttack("BloodMage"));
 	}

@@ -34,7 +34,6 @@
 
 public abstract class DungeonCharacter 
 {
-
 	private String name;
 	private int hitPoints;
 	private int attackSpeed;

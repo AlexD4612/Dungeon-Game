@@ -1,0 +1,18 @@
+Work Done on Final Project
+Graham:
+-Created hero/monster factory
+-Created Attack Strategy pattern
+-Created flyweight attack interface
+-Changed battleChoices into template
+
+Chase:
+-Created new hero 
+-Created new monster
+-Implemented JUnit tests
+-Created initial attack interface
+
+Alex:
+-Created Room class
+-Created Dungeon class
+-Finished hero class/dungeon traversal system
+-Created UML diagram
