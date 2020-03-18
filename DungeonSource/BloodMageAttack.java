@@ -7,9 +7,9 @@ public class BloodMageAttack extends Attack{
 
 	@Override
 	public int specialAttack() {
-		if (Math.random() <= .65)
+		if (Math.random() <= .95)
 		{
-			return(int)(Math.random() * 50) + 20;
+			return(int)(Math.random() * 30) + 20;
 		}
 		else {
 			return 0;

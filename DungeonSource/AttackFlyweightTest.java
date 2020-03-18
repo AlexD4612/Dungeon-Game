@@ -9,14 +9,14 @@ class AttackFlyweightTest {
 	private ArrayList<Attack> pool;
 	
 	@Test
-	void test() {
+	void testinitialize1() {
 		AttackFlyweightFactory test = new AttackFlyweightFactory();
 		pool = new ArrayList<Attack>();
 		assertTrue(pool.isEmpty() == true);
 	}
 	
 	@Test
-	void test2() {
+	void testinitialize2() {
 		AttackFlyweightFactory test = new AttackFlyweightFactory();
 		pool = new ArrayList<Attack>();
 		pool.add(new SorceressAttack("Sorceress"));
