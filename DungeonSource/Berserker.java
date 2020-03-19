@@ -33,7 +33,7 @@ public class Berserker extends Hero {
 			opponent.subtractHitPoints(blowPoints);
 		}
 		else {
-			System.out.println(getName() + " spun out");
+			System.out.println(getName() + " spun out!");
 			System.out.println();
 		}
 	}

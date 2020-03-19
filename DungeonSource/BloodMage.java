@@ -1,4 +1,3 @@
-import java.util.Scanner;
 
 /**
  * Title:
@@ -20,7 +19,7 @@ public class BloodMage extends Hero
     public BloodMage()
 	{
 
-		super("BloodMage", 90, 4, .65, 30, 50, .3);
+		super("BloodMage", 90, 3, .95, 30, 50, .3);
 		this.specialAttack = wFactory.getAttack("BloodMage");
 		
     }
@@ -47,10 +46,10 @@ public class BloodMage extends Hero
 
 	@Override
 	protected void handleSpecial(DungeonCharacter opponent) {
-		double lifeattack = (this.specialAttack.specialAttack() * .5); //special attack damage should just be normal attack FIX BloodMageAttack class!
+		double lifeattack = (this.specialAttack.specialAttack() * .7); 
 		int lifesteal = (int) lifeattack;
 		if (lifesteal != 0) {
-			System.out.println(getName() + " drained drained a health amount of " + lifeattack
+			System.out.println(getName() + " drained a health amount of " + lifesteal
 					+ " health!");
 			opponent.subtractHitPoints(lifesteal);
 			addHitPoints(lifesteal);

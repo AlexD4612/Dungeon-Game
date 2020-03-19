@@ -9,7 +9,7 @@ public class AttackFlyweightFactory{
 		initialize();
 	}
 	
-	private void initialize() {
+	private void initialize() {	
 		pool.add(new SorceressAttack("Sorceress"));
 		pool.add(new ThiefAttack("Theif"));
 		pool.add(new WarriorAttack("Warrior"));
