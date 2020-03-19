@@ -20,6 +20,9 @@ class MonsterFactoryTest {
 		else if(monsterNum == 4) {
 			assertTrue(test.createMonster(4) == new Gargoyle());
 		}
+		else if(monsterNum == 5) {
+			assertTrue(test.createMonster(5) == new Ooze());
+		}
 	}
 
 }

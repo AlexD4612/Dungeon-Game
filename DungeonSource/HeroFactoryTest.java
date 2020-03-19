@@ -19,6 +19,9 @@ class HeroFactoryTest {
 		}
 		else if(heroNum == 4) {
 			assertTrue(test.createHero(4) == new BloodMage());
-		}		
+		}	
+		else if(heroNum == 5) {
+			assertTrue(test.createHero(5) == new Berserker());
+		}
 	}
 }
